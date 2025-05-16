@@ -1,0 +1,2 @@
+nouman,1560
+player_1,1200

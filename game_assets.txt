@@ -1,0 +1,11 @@
+
+
+
+texture, player_1, bio.png
+texture, player_2, bio.png
+
+
+
+
+font, main_font, hello.ttf
+font, title_font, hello.ttf

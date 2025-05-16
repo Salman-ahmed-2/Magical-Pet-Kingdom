@@ -1,0 +1,321 @@
+@startuml
+
+package "minigame.h" {
+  class Training {
+    +int** allocateGrid(int row, int col)
+    +void cleanupGrid(int** A, int row)
+    +void initGrid(int** A, int row, int col)
+    +bool canMove(int** A, int row, int col, int prow, int pcol)
+    +void handleInput(Event, int** A, int row, int col, int& prow, int& pcol, int& score)
+    +void drawGrid(RenderWindow, int** A, int row, int col, Text, int score)
+    +bool loadFont(Font)
+    +Text createScoreText(Font, int row)
+  }
+}
+
+package "leader.h" {
+  class ScoreEntry {
+    +string player_name
+    +int player_score
+  }
+
+  class GameTexture {
+    +string texture_name
+    +Texture sf_texture
+  }
+
+  class GameFont {
+    +string font_name
+    +Font sf_font
+  }
+
+  class AssetData {
+    +string asset_type
+    +string asset_name
+    +string asset_path
+  }
+
+  class GameManager {
+    -RenderWindow& game_window
+    -AssetData game_assets[MAX_ASSETS]
+    -GameTexture game_textures[MAX_TEXTURES]
+    -GameFont game_fonts[MAX_FONTS]
+    -ScoreEntry leader_board[MAX_LEADERBOARD_ENTRIES]
+    -int asset_count
+    -int texture_count
+    -int font_count
+    -int leader_board_count
+    +GameManager(RenderWindow&)
+    +void run()
+    -void load_assets()
+    -void setup_game()
+    -void main_loop()
+    -int load_asset_data(string, AssetData[], int)
+    -void save_player_scores(string, ScoreEntry[], int)
+    -int load_leader_board(string, ScoreEntry[], int)
+  }
+
+  GameManager o--> "many" AssetData
+  GameManager o--> "many" GameTexture
+  GameManager o--> "many" GameFont
+  GameManager o--> "many" ScoreEntry
+  GameManager --> RenderWindow
+}
+
+package "shop.h" {
+  class Shop {
+    -int coins
+    +void set_coin(int)
+    +int get_coins()
+  }
+
+  class Item {
+    +string name
+    +string type
+    +string effect
+    +int price
+    +int quantity
+    +Item()
+    +Item(string, string, string, int, int)
+    +string get_display_text()
+    +string get_name()
+    +string get_effect()
+    +int get_price()
+  }
+
+  Item --|> Shop
+}
+
+package "main.cpp" {
+  class Player {
+    -string player_name
+    -int age
+    -int level
+    +Player(string, int, int)
+    +void set_player_name(string)
+    +string get_player_name()
+    +void set_age(int)
+    +int get_age()
+    +void set_level(int)
+    +int get_level()
+    +void display_pet_info()
+  }
+}
+
+package "fight.h" {
+  class Potion {
+    +string name
+    +string effect
+    +int quantity
+    +Texture texture
+    +Sprite sprite
+    +float effect_timer
+    +Potion()
+    +Potion(string, string, string, int)
+    +void apply_effect(Pet*)
+  }
+
+  class Obstacle {
+    #RectangleShape wall
+    +Obstacle()
+    +Obstacle(float, float)
+    +const RectangleShape& get_wall()
+    +void set_position(float, float)
+    +void draw(RenderWindow&)
+  }
+
+  class HealthBar {
+    #float max_width
+    +RectangleShape background
+    +RectangleShape bar
+    +HealthBar(float, float, Color)
+    +void set_position(float, float)
+    +void update(int)
+    +void draw(RenderWindow&)
+  }
+
+  class Fireball {
+    #CircleShape shape_circle
+    #float velocity_x
+    #float velocity_y
+    #bool available
+    #int turn
+    +Fireball(float)
+    +const CircleShape& get_shape()
+    +bool is_available()
+    +void set_available(bool)
+    +int get_turn()
+    +void set_turn(int)
+    +bool check_obstacle_collision(Obstacle[], int)
+    +void launch(float, float, float, float, int)
+    +void update(Obstacle[], int)
+    +void draw(RenderWindow&)
+  }
+
+  class Pet {
+    #Sprite sprite
+    #Texture texture
+    #PetType type
+    #float velocity_x
+    #float velocity_y
+    #int health
+    #int score
+    #float attack_power
+    #float speed
+    #float defense
+    #bool is_blocking_state
+    #float fireball_cooldown
+    #int player_id
+    #HealthBar health_bar
+    #float invincible_timer
+    #bool is_invincible
+    +RectangleShape shape
+    +Pet(float, int, int)
+    +const RectangleShape& get_shape()
+    +const Vector2f& get_position()
+    +int get_score()
+    +bool is_blocking()
+    +int get_player_id()
+    +bool get_invincible()
+    +const HealthBar& get_health_bar()
+    +float get_velocity_x()
+    +float get_velocity_y()
+    +float get_attack_power()
+    +float get_speed()
+    +float get_defense()
+    +void set_attack_power(float)
+    +void set_speed(float)
+    +void set_defense(float)
+    +void set_invincible(bool)
+    +void set_health(int)
+    +int get_health()
+    +void set_score(int)
+    +void set_blocking(bool)
+    +void set_player_id(int)
+    +void set_velocity(float, float)
+    +void reset_position(float, float)
+    +void move_towards(float, float)
+    +float get_distance_to(float, float)
+    +bool has_line_of_sight(float, float, Obstacle[], int)
+    +void update(float, Obstacle[], int, Potion[])
+    +void take_damage(int)
+    +bool can_shoot()
+    +void shoot(Fireball&, float, float)
+    +void draw(RenderWindow&)
+  }
+
+  class Dragon {
+    +Dragon(int)
+    +void attack()
+    +void special_ability()
+  }
+
+  class Phoenix {
+    +Phoenix(int)
+    +void attack()
+    +void special_ability()
+  }
+
+  class Unicorn {
+    +Unicorn(int)
+    +void speed_burst()
+    +void magic_shield()
+  }
+
+  class Griffin {
+    +Griffin(int)
+    +void claw_strike()
+    +void dive_bomb()
+  }
+
+  class Game {
+    -RenderWindow& window
+    -Pet* player_1
+    -Pet* player_2
+    -Fireball fireballs[MAX_FIREBALLS]
+    -Obstacle obstacles[MAX_OBSTACLES]
+    -Font font
+    -Text score_1
+    -Text score_2
+    -Text game_over_text
+    -int active_fireball
+    -int obstacle_count
+    -bool game_over_state
+    -Potion potions[MAX_POTIONS]
+    -Text potion_status
+    -Vector2f last_position
+    -Vector2f search_path[MAX_SEARCH_POINTS]
+    -float search_timer
+    -int current_point
+    -int search_size
+    -int battlefield_type
+    +Game(RenderWindow&, int)
+    +~Game()
+    +void initialize_obstacles()
+    +void initialize_search_path()
+    +void initialize_potions()
+    +void run(int)
+    +void process_events()
+    +void update(float)
+    +void update_bot_player(float)
+    +Fireball& get_available_fireball()
+    +void check_fireball_collision(Fireball&)
+    +void reset_game()
+    +void draw()
+  }
+
+  Peto-->HealthBar
+  Pet--> Fireball
+  Pet--> Obstacle
+  Pet--> Potion
+  Dragon--|> Pet
+  Phoenix--|> Pet
+  Unicorn--|> Pet
+  Griffin--|> Pet
+  Gameo--> "2" Pet
+  Gameo--> "many" Fireball
+  Gameo--> "many" Obstacle
+  Gameo--> "many" Potion
+  Game--> RenderWindow
+}
+
+package "SFML" {
+  class RenderWindow
+  class Font
+  class Text
+  class Event
+  class Texture
+  class Sprite
+  class RectangleShape
+  class CircleShape
+  class Color
+}
+
+Training--> RenderWindow
+Training--> Font
+Training--> Text
+Training--> Event
+Item--> Font
+Item--> RenderWindow
+Item--> Event
+Player--> Game
+Player--> GameManager
+Player--> Training
+GameManager--> Font
+GameManager--> Text
+GameManager --> Texture
+GameManager--> Sprite
+GameManage --> RectangleShape
+Obstacle--> RectangleShape
+HealthBar --> RectangleShape
+HealthBar--> Color
+Fireball--> CircleShape
+Fireball--> Obstacle
+Pet--> Sprite
+Pet--> Texture
+Pet--> RectangleShape
+Game--> Font
+Game --> Text
+Game --> CircleShape
+
+@enduml
