@@ -10,7 +10,7 @@
   <a href="#features">Features</a> •
   <a href="#installation">Installation</a> •
   <a href="#gameplay">Gameplay</a> •
-  <a href="#screenshots">Screenshots</a> •
+  <a href="#view">Preview</a> •
   <a href="#technologies-used">Tech Stack</a> •
   <a href="#stats">Stats</a> •
   <a href="#credits">Credits</a> •
@@ -19,7 +19,7 @@
 
 ---
 
-## 🎮 Project Overview
+##  Project Overview
 
 **Magical Pets Kingdom** is a fantasy-themed game built using **C++ and SFML** as part of the CS1004 Object Oriented Programming course at FAST NUCES.
 
@@ -27,7 +27,7 @@ Players can adopt and train magical creatures like Dragons, Phoenixes, Unicorns,
 
 ---
 
-## 🚀 Features
+##  Features
 
 - 🐲 Multiple pet types with unique attributes & abilities
 - 🛡️ Arena Battles (1v1, 2v2, Guild Wars)
@@ -42,7 +42,7 @@ Players can adopt and train magical creatures like Dragons, Phoenixes, Unicorns,
 
 ---
 
-## 💻 Installation
+##  Installation
 
 ### ▶️ Windows
 1. Install [SFML](https://www.sfml-dev.org/download.php)
@@ -62,7 +62,7 @@ make                       # build
 
 ---
 
-## 🕹️ Gameplay
+##  Gameplay
 
 - Select and train pets in **Training Camp**
 - Fight AI opponents in **Arena**
@@ -72,19 +72,15 @@ make                       # build
 
 ---
 
-## 🖼️ Screenshots
+## view
 
-> Add your own game images if available.
 
-```markdown
-![Main Menu](assets/screens/menu.png)
-![Arena Battle](assets/screens/arena.png)
-![Training Camp](assets/screens/training.png)
-```
+
+![Preview](pet.gif)
 
 ---
 
-## 🛠️ Technologies Used
+##  Technologies Used
 
 ![C++](https://img.shields.io/badge/C%2B%2B-00599C?style=flat&logo=c%2B%2B&logoColor=white)
 ![SFML](https://img.shields.io/badge/SFML-Graphics%20Library-green)
@@ -95,7 +91,7 @@ make                       # build
 
 ---
 
-## 📊 Stats
+##  Stats
 
 <p align="center">
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=salman-ahmed-2&theme=dark&hide_border=true" />
@@ -107,7 +103,7 @@ make                       # build
 
 ---
 
-## 🙌 Credits
+##  Credits
 
 - 📚 **FAST NUCES** – CS1004 OOP (Spring 2025)
 - 🧑‍🏫 Instructor and TAs
@@ -117,7 +113,7 @@ make                       # build
 
 ---
 
-## 📬 Contact
+##  Contact
 
 > Let’s connect!
 
